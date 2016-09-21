@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <ui-textbox label="Passphrase" name="passphrase"
-                placeholder="Your passphrase..."
-                value={{ passphrase }}>
-    </ui-textbox>
+  <ui-textbox label="Passphrase" name="passphrase"
+              placeholder="Your passphrase..."
+              :value.sync="passphrase" :type.sync="inputType"
+              @focussed="focusPassphrase">
+  </ui-textbox>
 
-    <ui-button type="flat" color="primary"
+  <div class="actions">
+    <ui-button type="flat" color="primary" raised
                @click="decrypt">Decrypt</ui-button>
   </div>
 </template>
@@ -14,7 +15,8 @@
   export default {
     data () {
       return {
-        passphrase: ''
+        passphrase: '',
+        inputType: 'text'
       }
     },
 
@@ -22,7 +24,18 @@
       decrypt () {
         console.log('Decrypt library data')
         console.log(this.passphrase)
+        this.inputType = 'password'
+      },
+
+      focusPassphrase () {
+        this.inputType = 'text'
       }
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  .actions {
+    text-align: right;
+  }
+</style>
